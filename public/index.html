@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestor de pedidos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <div>
+        <p class="eyebrow">Pedidos · Cocina</p>
+        <h1>Gestor de pedidos</h1>
+        <p class="sub">Registra encargos, controla el estado y prepara las entregas.</p>
+      </div>
+      <div class="status-pill" id="summary"></div>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="create">Nuevo pedido</button>
+      <button class="tab-btn" data-tab="orders">Pedidos registrados</button>
+      <button class="tab-btn hidden" data-tab="detail">Detalle</button>
+      <button class="tab-btn hidden" data-tab="multi">Detalle múltiple</button>
+    </div>
+
+    <section class="card tab-panel active" data-tab="create">
+      <h2>Nuevo pedido</h2>
+      <form id="order-form">
+        <div class="sticky-bar">
+          <div id="order-total" class="order-total">Total: 0,00 €</div>
+          <button type="submit" class="primary">Guardar pedido</button>
+        </div>
+        <div id="save-message" class="save-message" hidden>Pedido guardado correctamente.</div>
+        <div class="items-head">
+          <div>
+            <h3>Pedido</h3>
+            <p class="items-sub">Usa +/− o escribe la cantidad para cada plato.</p>
+          </div>
+        </div>
+        <div id="cart" class="cart-list"></div>
+
+        <div class="grid">
+          <label>Nombre
+            <input name="customerName" required placeholder="Nombre y apellidos">
+          </label>
+          <label>Teléfono
+            <input name="phone" required placeholder="Ej. 600123123">
+          </label>
+          <label>Fecha de recogida
+            <input type="datetime-local" name="pickupDate" required>
+          </label>
+          <label>Notas
+            <textarea name="notes" placeholder="Instrucciones, alergias, etc."></textarea>
+          </label>
+        </div>
+
+        <div class="items-head">
+          <div>
+            <h3>Platos (Navidad)</h3>
+            <p class="items-sub">Toca un plato para añadirlo al pedido.</p>
+          </div>
+        </div>
+        <div id="menu-grid" class="menu-grid"></div>
+
+        <p class="help">Estados: registrado → recibido → en proceso → completado → entregado.</p>
+      </form>
+    </section>
+
+    <section class="card tab-panel" data-tab="orders">
+      <div class="list-head">
+        <h2>Pedidos</h2>
+        <div class="filters">
+          <input id="orders-search" placeholder="Buscar por nombre o teléfono">
+          <select id="status-filter">
+            <option value="">Todos los estados</option>
+            <option value="registrado">Registrado</option>
+            <option value="recibido">Recibido</option>
+            <option value="en_proceso">En proceso</option>
+            <option value="completado">Completado</option>
+            <option value="entregado">Entregado</option>
+          </select>
+          <select id="orders-sort">
+            <option value="date_desc">Fecha ↓</option>
+            <option value="date_asc">Fecha ↑</option>
+            <option value="status_asc">Estado A-Z</option>
+            <option value="status_desc">Estado Z-A</option>
+          </select>
+          <div class="export-actions">
+            <button type="button" class="ghost" id="export-csv">CSV</button>
+            <button type="button" class="ghost" id="export-xls">Excel</button>
+            <button type="button" class="ghost" id="export-pdf">PDF</button>
+          </div>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="orders-table selectable">
+          <thead>
+            <tr>
+              <th><input type="checkbox" id="orders-select-all"></th>
+              <th>Cliente</th>
+              <th>Teléfono</th>
+              <th>Fecha alta</th>
+              <th>Fecha recogida</th>
+              <th>Notas</th>
+              <th>Importe</th>
+              <th>Platos</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="orders-table-body"></tbody>
+        </table>
+        <div id="orders-empty" class="empty-state" hidden>No hay pedidos.</div>
+      </div>
+    </section>
+    <section class="card tab-panel hidden" data-tab="detail">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">Detalle de pedido</p>
+          <h2 id="detail-name">Selecciona un pedido</h2>
+          <p class="sub" id="detail-date"></p>
+        </div>
+        <div class="detail-actions">
+          <span class="badge" id="detail-status-label"></span>
+          <div class="quick-status" id="detail-quick-status"></div>
+          <div class="detail-controls">
+            <button id="detail-edit" class="ghost">Editar</button>
+            <button id="detail-delete" class="ghost danger">Eliminar</button>
+          </div>
+          <button id="detail-print" class="primary">Imprimir</button>
+        </div>
+      </div>
+      <p id="detail-notes" class="detail-notes"></p>
+      <div class="table-wrap">
+        <table class="orders-table">
+          <thead>
+            <tr><th>Plato</th><th>Cant.</th><th>Unidad</th></tr>
+          </thead>
+          <tbody id="detail-items"></tbody>
+        </table>
+      </div>
+      <div id="detail-empty" class="empty-state">Selecciona un pedido para ver el detalle.</div>
+    </section>
+
+    <section class="card tab-panel hidden" data-tab="multi">
+      <div class="list-head">
+        <h2>Detalle múltiple</h2>
+        <p class="items-sub" id="multi-count">Selecciona pedidos en la tabla.</p>
+      </div>
+      <div id="multi-container" class="multi-grid"></div>
+      <div id="multi-empty" class="empty-state">No hay pedidos seleccionados.</div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

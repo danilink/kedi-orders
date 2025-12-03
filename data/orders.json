@@ -1,0 +1,57 @@
+[
+  {
+    "id": "885c8b70-fae5-434f-ac76-4c05edf1b6af",
+    "customerName": "asdfsdf",
+    "phone": "+34620586411",
+    "pickupDate": "2025-12-20T11:15",
+    "items": [
+      {
+        "name": "Salpicón de marisco",
+        "unit": "kg",
+        "price": 35,
+        "quantity": 1
+      },
+      {
+        "name": "Lombarda rehogada con manzana y uvas pasas",
+        "unit": "kg",
+        "price": 18,
+        "quantity": 1
+      },
+      {
+        "name": "Cochinillo lechal (entero)",
+        "unit": "unidad",
+        "price": 180,
+        "quantity": 1
+      },
+      {
+        "name": "Solomillo ibérico relleno de foie gras, bacón, etc.",
+        "unit": "unidad",
+        "price": 20,
+        "quantity": 1
+      },
+      {
+        "name": "Pollo relleno con salsa (cabrales, ciruelas)",
+        "unit": "unidad",
+        "price": 30,
+        "quantity": 1
+      },
+      {
+        "name": "Guarnición de patatas asadas",
+        "unit": "kg",
+        "price": 10,
+        "quantity": 1
+      },
+      {
+        "name": "Tarta casera de queso",
+        "unit": "unidad",
+        "price": 12,
+        "quantity": 1
+      }
+    ],
+    "status": "eliminado",
+    "createdAt": "2025-12-03T10:15:58.864Z",
+    "notes": "",
+    "totalPrice": 305,
+    "updatedAt": "2025-12-03T10:17:03.717Z"
+  }
+]
